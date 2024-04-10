@@ -8,7 +8,8 @@
 #include <iostream>
 #include <algorithm>
 #include <thread>
-
+#include <cstdlib>
+#include <vector>
 
 
 using namespace std;
@@ -268,30 +269,31 @@ struct mmTree{
         }
     }
     tablero* selecOPMINMAX(int depth, int p){
-        cout<<"depuracion"<<endl;
+        //cout<<"depuracion"<<endl;
         tablero* opt = nullptr;
         if (tree[0][0]->placesEmpty==1){
             *tree[0][0] = *tree[1][0];
             depth--;
         }
         for(int i = depth; i>0;i--){
-            cout<<"nivel: "<< i<<endl;
+            //cout<<"nivel: "<< i<<endl;
             int contar = tree[i-1][0]->placesEmpty;
-            tree[i-1][0]->imprimirTablero();
+            //tree[i-1][0]->imprimirTablero();
             //tree[i-1][0]->imprimirTablero();
             for(int nodesN = 0, sons = 0,fathers = 0; nodesN<tree[i].size();nodesN++,sons++){
                 if(i == depth){
-                    tree[i][nodesN]->imprimirTablero();
-                    cout<<fathers<<" padre"<<endl;
-                    tree[i][nodesN]->busqHorizontal();
-                    tree[i][nodesN]->busqVertical();
-                    tree[i][nodesN]->busqDiagonal();
+                    //tree[i][nodesN]->imprimirTablero();
+                    //cout<<fathers<<" padre"<<endl;
+                    //tree[i][nodesN]->busqHorizontal();
+                    //tree[i][nodesN]->busqVertical();
+                    //tree[i][nodesN]->busqDiagonal();
+                    tree[i][nodesN]->buscarPosibilidades();
                     if(p==1){
                         tree[i][nodesN]->PoswinIA= tree[i][nodesN]->posPlayer2 - tree[i][nodesN]->posPlayer1;
-                        cout<<tree[i][nodesN]->PoswinIA<<endl;
+                        //cout<<tree[i][nodesN]->PoswinIA<<endl;
                     }else{
                         tree[i][nodesN]->PoswinIA= tree[i][nodesN]->posPlayer1 - tree[i][nodesN]->posPlayer2;
-                        cout<<tree[i][nodesN]->PoswinIA<<endl;
+                        //cout<<tree[i][nodesN]->PoswinIA<<endl;
                     }
                     
                     if(nodesN==0||sons==0){
@@ -306,30 +308,30 @@ struct mmTree{
                     }
                     if((sons+1) == contar){
                         fathers++;
-                        if(fathers<tree[i-1].size())
-                        tree[i-1][fathers]->imprimirTablero();
+                        //if(fathers<tree[i-1].size())
+                        //tree[i-1][fathers]->imprimirTablero();
                         sons = -1;
                     }
                 }else{
-                    cout<<fathers<<"padre"<<endl;
+                    //cout<<fathers<<"padre"<<endl;
                     if(nodesN==0||sons==0){
                         if(i-1==0){
                             *tree[0][0] = *tree[i][nodesN];
                             tree[0][0]->PoswinIA = tree[i][nodesN]->PoswinIA;
-                            cout<<tree[i][nodesN]->PoswinIA<<endl;
+                            //cout<<tree[i][nodesN]->PoswinIA<<endl;
                         }else{
                             tree[i-1][fathers]->PoswinIA = tree[i][nodesN]->PoswinIA;
-                            cout<<tree[i][nodesN]->PoswinIA<<endl;
+                            //cout<<tree[i][nodesN]->PoswinIA<<endl;
                         }
                     }else if((i-1)%2 == 0 ){
                         if(tree[i-1][fathers]->PoswinIA < tree[i][nodesN]->PoswinIA ){
                             if(i-1==0){
                                 *tree[0][0] = *tree[i][nodesN];
                                 tree[0][0]->PoswinIA = tree[i][nodesN]->PoswinIA;
-                                cout<<tree[i][nodesN]->PoswinIA<<endl;
+                                //cout<<tree[i][nodesN]->PoswinIA<<endl;
                             }else{
                                 tree[i-1][fathers]->PoswinIA = tree[i][nodesN]->PoswinIA;
-                                cout<<tree[i][nodesN]->PoswinIA<<endl;
+                                //out<<tree[i][nodesN]->PoswinIA<<endl;
                             }
                         }
                         
@@ -339,8 +341,8 @@ struct mmTree{
                     }
                     if((sons+1) == contar){
                         fathers++;
-                        if(fathers<tree[i-1].size())
-                        tree[i-1][fathers]->imprimirTablero();
+                        //if(fathers<tree[i-1].size())
+                        //tree[i-1][fathers]->imprimirTablero();
                         sons = -1;
                     }
                     
@@ -377,9 +379,12 @@ int main(int argc, const char * argv[]) {
     if(position == 1){
         while(1){
             int x,y;
+            cout<<"ingrese coord: ";
             cin>>x>>y;
             N1.isertar('X', x, y);
             N1.imprimirTablero();
+            system("cls");
+            //cout<<endl;
             N1.buscarPosibilidades();
             if(N1.winner>0 || N1.placesEmpty == 0)
                 break;
@@ -392,9 +397,12 @@ int main(int argc, const char * argv[]) {
                 Arbolito.selecOPMINMAX(depth, 1);
             }
             N1.imprimirTablero();
+            system("cls");
+            //cout<<endl;
             N1.buscarPosibilidades();
             if(N1.winner>0 || N1.placesEmpty == 0)
                 break;
+            
         }
     }else{
         while(1){
@@ -408,14 +416,19 @@ int main(int argc, const char * argv[]) {
                 Arbolito.selecOPMINMAX(depth, 2);
             }
             N1.imprimirTablero();
+            system("cls");
+            //cout<<endl;
             N1.buscarPosibilidades();
             if(N1.winner>0 || N1.placesEmpty == 0)
                 break;
             int x,y;
+            cout<<"Ingrese Coord: ";
             cin>>x>>y;
             N1.isertar('O', x, y);
             N1.imprimirTablero();
+            system("cls");
             N1.buscarPosibilidades();
+            //cout<<endl;
             if(N1.winner>0 || N1.placesEmpty == 0)
                 break;
         }
