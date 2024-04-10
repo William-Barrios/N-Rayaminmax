@@ -49,7 +49,6 @@ public:
             delete[] mat[i];
         }
         delete[] mat;
-        mat = nullptr;
     }
 
     void isertar(char player, int x, int y);
@@ -394,11 +393,11 @@ int main(int argc, const char* argv[]) {
             cout << "ingrese coord: ";
             cin >> x >> y;
             N1.isertar('X', x, y);
-            //system("cls");
+            system("cls");
             N1.imprimirTablero();
             N1.buscarPosibilidades();
-            //cout << N1.posPlayer1<<endl;
-            //cout << N1.posPlayer2<<endl;
+            cout << N1.posPlayer1<<endl;
+            cout << N1.posPlayer2<<endl;
             if (N1.winner > 0 || N1.placesEmpty == 0)
                 break;
             mmTree Arbolito(&N1, 2);
@@ -429,7 +428,7 @@ int main(int argc, const char* argv[]) {
                 Arbolito.genTree(depth);
                 Arbolito.selecOPMINMAX(depth, 2);
             }
-            //system("cls");
+            system("cls");
             N1.imprimirTablero();
             //cout<<endl;
             N1.buscarPosibilidades();
@@ -439,7 +438,7 @@ int main(int argc, const char* argv[]) {
             cout << "Ingrese Coord: ";
             cin >> x >> y;
             N1.isertar('O', x, y);
-            //system("cls");
+            system("cls");
             N1.imprimirTablero();
             N1.buscarPosibilidades();
             //cout<<endl;
