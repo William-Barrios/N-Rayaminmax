@@ -365,16 +365,6 @@ struct mmTree {
         //this->tree[0][0]->imprimirTablero();
         return tree[0][0];
     }
-    ~mmTree() {
-        for (int i = 0; i < tree.size(); ++i) {
-            for (int j = 0; j < tree[i].size(); ++j) {
-                if (tree[i][j] != nullptr) {
-                    delete tree[i][j]->mat;
-                    tree[i][j] = nullptr; // Esto es opcional pero puede ser útil para evitar liberar el mismo objeto más de una vez.
-                }
-            }
-        }
-    }
 };
 
 
